@@ -29,13 +29,10 @@ class SiteFragment : Fragment() {
             override fun handleOnBackPressed() {
                 if (webView.canGoBack()) {
                     webView.goBack()
-                } else if(backPressedTime + 10000 > System.currentTimeMillis()){
-                    requireActivity().finish()
                 } else {
                 showDialog()
                   }
-                backPressedTime = System.currentTimeMillis()
-            }
+        }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }

@@ -24,14 +24,6 @@ class ResultsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-/*        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (webView.canGoBack()) {
-                    webView.goBack()
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

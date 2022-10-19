@@ -23,6 +23,7 @@
             android:hardwareAccelerated="true"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:usesCleartextTraffic="true"
+            android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustPan" >
 
             <intent-filter>
