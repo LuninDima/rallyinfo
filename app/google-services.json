@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "476544593156",
+    "project_id": "rallyinfo-249ef",
+    "storage_bucket": "rallyinfo-249ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476544593156:android:4abd1fa4b670c63b837451",
+        "android_client_info": {
+          "package_name": "ru.moondi.rallyinfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476544593156-1suuq2ra1p1d24qlok5lgsvuj2difkjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrVTS07tD2elJv3rktW8dJRFD_V0UN-1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476544593156-1suuq2ra1p1d24qlok5lgsvuj2difkjk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
