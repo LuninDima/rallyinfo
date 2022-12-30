@@ -31,6 +31,14 @@ class LocalDataSource {
         sharedPreferences.edit().putString(URL_SITE_NEWS_KEY, urlsSiteNews).apply()
     }
 
+    fun getDataUrlResultsDakarToSharedPreferences(): String {
+        return sharedPreferences.getString(URL_RESULTS_DAKAR_KEY, URL_RESULTS_DAKAR_VALUE)!!
+    }
+
+    fun saveDataUrlResultsDakarToSharedPreferences(urlResultDakar: String) {
+        sharedPreferences.edit().putString(URL_RESULTS_DAKAR_KEY, urlResultDakar).apply()
+    }
+
 
 
 

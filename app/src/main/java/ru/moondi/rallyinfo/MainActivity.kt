@@ -1,7 +1,10 @@
 package ru.moondi.rallyinfo
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -62,6 +65,11 @@ class MainActivity : AppCompatActivity() {
     private fun saveUrlSiteNews() {
         val urlSiteNews = remoteConfig.getString(URL_SITE_NEWS_KEY)
         localDataSource.saveDataUrlSiteNewsToSharedPreferences(urlSiteNews)
+    }
+
+    private fun saveUrlDakarResults() {
+        val urlResultsDakar = remoteConfig.getString(URL_RESULTS_DAKAR_KEY)
+        localDataSource.saveDataUrlResultsDakarToSharedPreferences(urlResultsDakar)
     }
 
 
