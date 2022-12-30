@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,8 @@ class ResultsDakarFragment : Fragment() {
     private fun getLinkFromFirebase() {
 
         urlResults = localDataSource.getDataUrlResultsDakarToSharedPreferences()
+        Log.d("mylogs", urlResults)
+        Log.d("mylogs", urlResults)
     }
 
     override fun onCreateView(

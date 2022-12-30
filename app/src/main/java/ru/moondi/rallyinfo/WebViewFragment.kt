@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,44 +14,41 @@ import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import ru.moondi.rallyinfo.databinding.FragmentResultsBinding
+import ru.moondi.rallyinfo.databinding.FragmentWebViewBinding
 
 
-class ResultsFragment : Fragment() {
-    private var urlDakarResults = URL_RESULTS_VALUE
+class WebViewFragment : Fragment() {
+    private lateinit var urlSite: String
     private lateinit var webView: WebView
-    private var _binding: FragmentResultsBinding? = null
+    private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding!!
-    private val localDataSource = LocalDataSource()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        getLinkFromFirebase()
-    }
 
-    private fun getLinkFromFirebase() {
-
-        urlDakarResults = localDataSource.getDataUrlResultsFromSharedPreferences()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentResultsBinding.inflate(inflater, container, false)
+        _binding = FragmentWebViewBinding.inflate(inflater, container, false)
+
+        val args = arguments
+
+        if (args != null) {
+            urlSite = args.getString(URL_KEY, DEFAULT_URL_VALUE)
+            Log.d("mylogs", urlSite)
+            Log.d("mylogs", urlSite)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            webView = binding.webViewResults
+            webView = binding.webView
             savedInstanceState.getBundle("webViewState")?.let { webView.restoreState(it) }
         } else {
-            webView = binding.webViewResults
+            webView = binding.webView
         }
 
     }
@@ -81,7 +79,7 @@ class ResultsFragment : Fragment() {
         }
 
         webView.apply {
-            loadUrl(urlDakarResults)
+            loadUrl(urlSite)
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
             settings.domStorageEnabled = true
@@ -101,6 +99,10 @@ class ResultsFragment : Fragment() {
 
     companion object {
 
-        fun newInstance() = ResultsFragment()
+        fun newInstance(bundle: Bundle): WebViewFragment {
+            val fragment = WebViewFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

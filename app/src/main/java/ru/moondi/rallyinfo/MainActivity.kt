@@ -10,7 +10,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -19,6 +23,7 @@ import ru.moondi.rallyinfo.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var toggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
     private lateinit var remoteConfig: FirebaseRemoteConfig
     private val localDataSource = LocalDataSource()
@@ -28,7 +33,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        initDrawer()
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SiteFragment.newInstance()).commit()
@@ -97,6 +106,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
         return when (item.itemId) {
             R.id.menu_results -> {
                 supportFragmentManager.beginTransaction().addToBackStack(null)
@@ -121,6 +133,66 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
 
+    }
+
+    private fun initDrawer() {
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_main -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SiteFragment.newInstance()).addToBackStack(null).commitAllowingStateLoss()
+                }
+                R.id.nav_wrc_results -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ResultsFragment.newInstance()).addToBackStack(null).commitAllowingStateLoss()
+
+                }
+                R.id.nav_wrc_stream -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, StreamFragment.newInstance()).addToBackStack(null).commitAllowingStateLoss()
+
+                }
+                R.id.nav_dakar_results -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ResultsDakarFragment.newInstance()).addToBackStack(null).commitAllowingStateLoss()
+
+                }
+                R.id.nav_video_wrc -> {
+                    openFragment(WebViewFragment(), URL_VIDEO_WRC)
+                }
+                R.id.nav_video_dakar -> {
+                    openFragment(WebViewFragment(), URL_VIDEO_DAKAR)
+                }
+                R.id.nav_news_wrc -> {
+                    openFragment(WebViewFragment(), URL_NEWS_WRC)
+                }
+                R.id.nav_news_erc -> {
+                    openFragment(WebViewFragment(), URL_NEWS_ERC)
+                }
+                R.id.nav_news_dakar -> {
+                    openFragment(WebViewFragment(), URL_NEWS_DAKAR)
+                }
+                R.id.nav_exit -> {
+                    this.finishAffinity()
+                }
+
+            }
+            true
+        }
+    }
+
+    private fun openFragment(fragment: Fragment, url: String){
+        supportFragmentManager.apply {
+            beginTransaction()
+                .replace(R.id.fragment_container, WebViewFragment.newInstance(Bundle().apply {
+                    putString(URL_KEY, url)
+                }))
+                .addToBackStack("")
+                .commitAllowingStateLoss()
+        }
     }
 
     override fun onBackPressed() {
