@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
                     saveUrlResults()
                     saveUrlStream()
                     saveUrlSiteNews()
+                    saveUrlDakarResults()
                 } else {
                     Toast.makeText(
                         this, "Fetch failed",
@@ -100,6 +101,11 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_results -> {
                 supportFragmentManager.beginTransaction().addToBackStack(null)
                     .replace(R.id.fragment_container, ResultsFragment.newInstance()).commitAllowingStateLoss()
+                true
+            }
+            R.id.menu_results_dakar -> {
+                supportFragmentManager.beginTransaction().addToBackStack(null)
+                    .replace(R.id.fragment_container, ResultsDakarFragment.newInstance()).commitAllowingStateLoss()
                 true
             }
             R.id.menu_video -> {
